@@ -1,0 +1,5 @@
+This is the material I used for a lightning talk on RSpec vs. Test::Unit at the Pittsburgh Ruby Brigade user group meeting on May 5, 2011.
+
+Please feel free to contact me with any questions! @Carols10Cents on twitter, or carol dot nichols at gmail.
+
+HTML slide framework courtesy of Eric Meyer's S5 project.

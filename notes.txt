@@ -1,0 +1,276 @@
+gist that set dhh off: https://gist.github.com/893027
+
+
+describe "GET current" do
+    before do
+      @request.cookies['hidden_notices'] = "1,#{notices(:permanent).id}"
+      get :current, :format => 'js'
+    end
+
+    it { should respond_with(:success) }
+    it { should set_cookie(:hidden_notices).to("#{notices(:permanent).id}") }
+    it { should render_template('notices/current') }
+  end
+end
+
+# vs
+
+test "GET current (or preferably an explanation WHY we are testing it)" do
+  @request.cookies['hidden_notices'] = "1,#{notices(:permanent).id}"
+  get :current, :format => 'js'
+
+  assert          respond_with(:success)
+  assert_equal    "#{notices(:permanent).id}", cookies[:hidden_notices]
+  assert_template 'notices/current'
+end
+
+
+
+
+pragdave: https://gist.github.com/893154
+vs
+dhh: https://gist.github.com/893184
+
+require File.expand_path(File.dirname(__FILE__) + '/../test_helper')
+
+class BuildStatusTest < ActiveSupport::TestCase
+  context "expiring build statii" do
+    should "remove the old one" do
+      assert_equal 2, BuildStatus.count
+      BuildStatus.expire_old     
+      statii = BuildStatus.all
+      assert_equal 1, statii.size
+      assert statii[0].updated_at >= 30.days.ago
+    end
+    
+  end
+  context "an existing build status" do
+    setup do
+      @build_status = BuildStatus.for(skus(:rails_pdf))
+    end
+    
+    should "be returned by BuildStatus.for" do
+      assert_equal build_statuses(:rails_status), @build_status
+    end
+  end
+  
+  context "a new build status" do
+    setup do
+      @build_status = BuildStatus.for(skus(:ruby_pdf)) 
+      @build_status.status = 'started'
+      assert @build_status.valid?, @build_status.errors.full_messages.to_sentence
+    end
+    
+    should "be a new record" do
+      assert @build_status.new_record?
+    end
+    
+    should "not accept an invalid status" do
+      @build_status.status = "wtfhax"
+      assert !@build_status.valid?
+    end
+    
+    
+    BuildStatus::STATUSES.each do |status|
+      context "with the #{status.inspect} status" do
+        setup do
+          @build_status.status = status
+        end
+        
+        should "be valid?" do
+          assert @build_status.valid?
+        end   
+        
+        should "say succeeded only when it has" do
+          assert_equal status == 'succeeded', @build_status.succeeded?
+        end
+        
+        should "say failed only when it has" do
+          assert_equal status == 'failed', @build_status.failed?
+        end
+        
+        should "say in_progress only when it hasn't finished" do
+          assert_equal status != 'failed' && status != 'succeeded', @build_status.in_progress?
+        end
+        
+      end
+    end
+    
+    
+  end
+end
+
+require File.expand_path(File.dirname(__FILE__) + '/../test_helper')
+
+class BuildStatusTest < ActiveSupport::TestCase
+  test "remove the old statii" do
+    assert_equal 2, BuildStatus.count
+    BuildStatus.expire_old     
+    statii = BuildStatus.all
+    assert_equal 1, statii.size
+    assert statii[0].updated_at >= 30.days.ago
+  end
+
+  test "an existing build status be returned by BuildStatus.for" do
+    @build_status = BuildStatus.for(skus(:rails_pdf))
+    assert_equal build_statuses(:rails_status), @build_status
+  end
+  
+  # I don't think this test has much value
+  test "a new build status should be a new record" do
+    assert new_build_status.new_record?
+  end
+    
+  test "a new build status should not accept an invalid status" do
+    assert !new_build_status("wtfhax").valid?
+  end    
+    
+  BuildStatus::STATUSES.each do |status|
+    test "new #{status.inspect} build should be valid?" do
+      assert new_build_status(status).valid?
+    end   
+    
+    test "new #{status.inspect} build should say succeeded only when it has" do
+      assert_equal status == 'succeeded', new_build_status(status).succeeded?
+    end
+    
+    test "new #{status.inspect} build should say failed only when it has" do
+      assert_equal status == 'failed', new_build_status(status).failed?
+    end
+    
+    test "new #{status.inspect} build should say in_progress only when it hasn't finished" do
+      assert_equal status != 'failed' && status != 'succeeded', create_new_build_status(status).in_progress?
+    end
+  end
+
+  
+  private
+    def create_new_build_status(status = 'started')
+      @build_status = BuildStatus.for(skus(:ruby_pdf)) 
+      @build_status.status = status
+      assert @build_status.valid?, @build_status.errors.full_messages.to_sentence
+      @build_status
+    end
+  end
+end
+
+
+?!??!?!? class vs instance vars instead of before each/all?
+
+describe Post do
+  before(:all) do
+    @author = User.make
+  end
+  
+  before(:each) do
+    @post = Post.make_unsaved(:author => @author)
+  end
+  
+  it "saves successfully" do
+    @post.save.should be
+  end
+  
+  it "can be reported" do
+    @post.save
+    @post.report.should be
+  end  
+end
+
+class PostTest < ActiveSupport::TestCase
+  def self.startup
+    @@author = User.make
+  end
+
+  def setup
+    @post = Post.make_unsaved(:author => @@author)
+  end
+
+  test "saves successfully" do
+    assert @post.save
+  end
+
+  test "can be reported" do
+    @post.save
+    assert @post.report
+  end
+
+  # ...
+end
+
+
+?!?!?! shared_examples_for vs including a module
+
+shared_examples_for "something removable" do
+end
+
+describe Post do
+  before(:each) do
+    @post = @model = Post.make_unsaved
+  end
+  
+  it_behaves_like "something removable"
+end
+
+
+
+module RemovableTests
+  def test_sets_removed_at_attribute
+    @model.remove
+    assert @model.removed_at
+  end
+end
+
+class PostTest < ActiveSupport::TestCase
+  include RemovableTests
+
+  def setup
+    @post = @model = Post.make_unsaved
+  end
+
+  # ...
+end
+
+
+
+
+I. Readability: "RSpec removes readability"
+  "something.should be_true" sums it up the aesthetic argument for me pretty well. That call hurts my eyes vs "assert something".
+II. 1 assertion per test
+III. Assert has 2 arguments
+IV. Tests should have value
+V. Added complexity should be worth it
+VI. rspec-rails request specs + js
+VII. Documentation
+VIII. Failure output - http://www.ultrasaurus.com/sarahblog/2009/08/ruby-unit-test-frameworks/
+
+
+
+Features
+
+<table>
+  <tr>
+    <th>Feature</th>
+    <th>Test::Unit</th>
+    <th>Minitest</th>
+    <th>RSpec</th>
+  </tr>
+  <tr>
+    <th>Included in 1.9.x stdlib</th>
+    <th>yes</th>
+    <th>yes</th>
+    <th>no</th>
+  </tr>
+  <tr>
+    <th>Mocking</th>
+    <th>no</th>
+    <th>yes</th>
+    <th>yes</th>
+  </tr>
+  <tr>
+    <th>Pending</th>
+    <th>no</th>
+    <th>yes ("skip")</th>
+    <th>yes ("pending")</th>
+  </tr>
+</table>
+    
