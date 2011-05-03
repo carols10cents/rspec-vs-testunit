@@ -1,5 +1,6 @@
 gist that set dhh off: https://gist.github.com/893027
-
+http://avdi.org/devblog/2011/04/07/rspec-is-for-the-literate/
+https://www.asseenontv.com/talking-pedometer/detail.php?p=293155&nav:Alpha+Sort
 
 describe "GET current" do
     before do
