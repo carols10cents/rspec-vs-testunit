@@ -233,18 +233,22 @@ end
 
 
 
-
-I. Readability: "RSpec removes readability"
-  "something.should be_true" sums it up the aesthetic argument for me pretty well. That call hurts my eyes vs "assert something".
-II. 1 assertion per test
-III. Assert has 2 arguments
-IV. Tests should have value
-V. Added complexity should be worth it
-VI. rspec-rails request specs + js
-VII. Documentation
-VIII. Failure output - http://www.ultrasaurus.com/sarahblog/2009/08/ruby-unit-test-frameworks/
-IX. You're doing it wrong
-
+I. DHH
+   A. Readability: "RSpec removes readability"
+      "something.should be_true" sums it up the aesthetic argument for me pretty well. That call hurts my eyes vs "assert something".
+      1. assert vs should
+      2. 1 assertion per test
+      3. Nested contexts vs test classes
+      4. shared_examples_for vs modules
+   B. Frameworks shape what we do
+      Which encourages newbs to write better tests?
+   C. Added complexity should be worth it
+   
+II. Differences in Features
+   A. rspec-rails request specs + js
+   B. Documentation
+   C. Failure output - http://www.ultrasaurus.com/sarahblog/2009/08/ruby-unit-test-frameworks/
+   D. Other
 
 Features
 

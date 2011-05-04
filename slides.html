@@ -34,7 +34,20 @@
     </div>
 
     <div class="slide">
-      <h1>Stuff!</h1>
+      <h1>RSpec Failure Output</h1>
+      <div>
+      <pre>
+      Failures:
+
+  1) PowerpointFixer#repair_text splits a wall of text into bullets
+     Failure/Error: @new_slide_content.should match(/^- We/)
+       expected "We will create a versetile content-based conglomeration while p
+ersevering at exuding info-mediaries. Open-source local benchmarks will be netwo
+rked via homogeneous info-mediaries. Optional zero administration arrays will av
+oid a polarised intangible system engine malfunction." to match /^- We/
+     # ./powerpoint_fixer_spec.rb:15:in `block (3 levels) in &lt;top (required)>'
+     </pre>
+     </div>
     </div>
 
   </div>
