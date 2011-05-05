@@ -3,6 +3,6 @@ class PowerpointFixer
   end
   
   def repair_text(content)
-    content
+    content.gsub(/versetile/, "versatile")
   end
 end
