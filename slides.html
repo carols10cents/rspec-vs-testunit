@@ -32,24 +32,131 @@
       <h2>(and Minitest for Hipster Steve)</h2>
       <h3>Carol Nichols</h3>
     </div>
-
+    
+    <div class="slide">
+      <h1>@dhh started a big twitter argument...</h1>
+      <div style="text-align:center;">
+        <img src="images/original_dhh_comments.png" />
+        <ul>
+          <li>Readability</li>
+          <li>Complexity</li>
+      </div>
+    </div>
+    <div class="slide">
+      <h1>Readability</h1>
+      <div style="text-align:center; margin: 150px 0;">
+        <img src="images/dhh_on_readability.png" />
+      </div>
+    </div>
+    <div class="slide">
+      <h1>Readability</h1>
+      <div>
+        <div>
+          def test_something
+            assert_equal value1, value2
+          end
+        </div>
+        <div>
+          vs.
+        </div>
+        <div>
+          it "does something" do
+            value1.should == value2
+          end
+        </div>
+      </div>
+    </div>
+    <div class="slide">
+      <h1>Is it just green vs blue? -@glv</h1>
+      <ul>
+        <li>Which is easier for new developers/testers to learn?</li>
+        <li>Which encourages us to write better tests and code?</li>
+        <li>Which is easier to maintain?</li>
+      </ul>
+    </div>
+    <div class="slide">
+      <h1>Complexity</h1>
+      <ul>
+        <li>RSpec modifies Object</li>
+        <li>RSpec changed a lot between 1.3 &amp; 2; sub-gems</li>
+        <li>RSpec is slower</li>
+      </ul>
+      <div>
+        Added complexity should be worth it. For @dhh, it isn't.
+      </div>
+    </div>
+    <div class="slide">
+      <h1>Features RSpec has that I like</h1>
+      <ul>
+        <li>rspec-rails request specs: add :js => true to run with selenium</li>
+        <li>RSpec documentation format</li>
+        <li>Failure output</li>
+      </ul>
+    </div>
     <div class="slide">
       <h1>RSpec Failure Output</h1>
       <div>
-      <pre>
-      Failures:
-
-  1) PowerpointFixer#repair_text splits a wall of text into bullets
-     Failure/Error: @new_slide_content.should match(/^- We/)
-       expected "We will create a versetile content-based conglomeration while p
-ersevering at exuding info-mediaries. Open-source local benchmarks will be netwo
-rked via homogeneous info-mediaries. Optional zero administration arrays will av
-oid a polarised intangible system engine malfunction." to match /^- We/
-     # ./powerpoint_fixer_spec.rb:15:in `block (3 levels) in &lt;top (required)>'
-     </pre>
+        <div>
+          Failures:<br />
+          <br />
+          1) PowerpointFixer#repair_text splits a wall of text into bullets
+        </div>
+        <div style="color: #c00;">
+          Failure/Error: @new_slide_content.should match(/^- We/)<br />
+          expected "We will create a versetile content-based conglomeration while persevering at exuding info-mediaries. Open-source local benchmarks will be networked via homogeneous info-mediaries. Optional zero administration arrays will avoid a polarised intangible system engine malfunction." to match /^- We/
+        </div>
+        <div>
+          # ./powerpoint_fixer_spec.rb:15:in `block (3 levels) in &lt;top (required)>'
+        </div>
      </div>
     </div>
+    <div class="slide">
+      <h1>Other features</h1>  
+      <table>
+        <tr>
+          <th>Feature</th>
+          <th>Test::Unit</th>
+          <th>Minitest</th>
+          <th>RSpec</th>
+        </tr>
+        <tr>
+          <th>Included in 1.9.x stdlib</th>
+          <th>yes</th>
+          <th>yes</th>
+          <th>no</th>
+        </tr>
+        <tr>
+          <th>Mocking</th>
+          <th>no</th>
+          <th>yes</th>
+          <th>yes</th>
+        </tr>
+        <tr>
+          <th>Pending</th>
+          <th>no</th>
+          <th>yes ("skip")</th>
+          <th>yes ("pending")</th>
+        </tr>
+      </table>
+    </div>
+    <div class="slide">
+      <h1>Conclusions</h1>
+      <ul>
+        <li></li>
+        <li>... I might use MiniSpec on my next project.</li>
+      </ul>
+    </div>
+    <div class="slide">
+	  <h1>Further Reading</h1>
+	    <ul>
+	      <li><a href="http://www.rubyinside.com/dhh-offended-by-rspec-debate-4610.html">Some tweets</a></li>
+	      <li><a href="http://chuckjhardy.com/post/4190104817/dhh-world-on-rspec-cucumber-and-testunit">More tweets</a></li>
+		    <li><a href="https://gist.github.com/893027">Gist of the code that started the whole thing</a></li>
+		    <li><a href="http://avdi.org/devblog/2011/04/07/rspec-is-for-the-literate/">Avdi: RSpec is for the Literate</a></li>
+		    <li><a href="http://www.ultrasaurus.com/sarahblog/2009/08/ruby-unit-test-frameworks/">Ultrasaurus: comparing test output</a></li>
 
+	    </ul>
+    </div>
   </div>
 
 </body>
