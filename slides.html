@@ -2,7 +2,7 @@
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <title>RSpec vs. Test::Unit</title>
+  <title>RSpec vs. test/unit</title>
   <meta name="generator" content="S5" />
   <meta name="version" content="S5 1.1" />
   <meta name="defaultView" content="slideshow" />
@@ -21,15 +21,15 @@
     <div id="header"></div>
     <div id="footer">
       <h1>PghRB, 5 May 2011</h1>
-      <h2>RSpec vs. Test::Unit <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/80x15.png" /></a></h2>
+      <h2>RSpec vs. test/unit <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/80x15.png" /></a></h2>
     </div>
   </div>
 
   <div class="presentation">
 
     <div class="slide">
-      <h1>RSpec vs. Test::Unit</h1>
-      <h2>(and Minitest for Hipster Steve)</h2>
+      <h1>RSpec vs. test/unit</h1>
+      <h2>(and minitest for Hipster Steve)</h2>
       <h3>Carol Nichols</h3>
     </div>
     
@@ -52,30 +52,34 @@
       <h1>Readability</h1>
       <div>
         <div>
-          def test_something
-            assert_equal value1, value2
-          end
+          <pre>
+def test_something
+  assert_equal value1, value2
+end</pre>
         </div>
         <div>
           vs.
         </div>
         <div>
-          it "does something" do
-            value1.should == value2
-          end
+          <pre>
+it "does something" do
+  value1.should == value2
+end</pre>
         </div>
       </div>
     </div>
     <div class="slide">
       <h1>Is it just green vs blue? -@glv</h1>
       <ul>
-        <li>Which is easier for new developers/testers to learn?</li>
+        <li>Which is easier for new developers/testers to learn?<br/>
+          <img src="images/robinjfisher_dont_need_that.png" />  
+        </li>
         <li>Which encourages us to write better tests and code?</li>
         <li>Which is easier to maintain?</li>
       </ul>
     </div>
     <div class="slide">
-      <h1>Complexity</h1>
+      <h1>Complexity - RSpec</h1>
       <ul>
         <li>RSpec modifies Object</li>
         <li>RSpec changed a lot between 1.3 &amp; 2; sub-gems</li>
@@ -86,64 +90,83 @@
       </div>
     </div>
     <div class="slide">
+      <h1>Complexity - test/unit</h1>
+      <ul>
+        <li>In Ruby 1.9, test/unit is a wrapper on top of minitest</li>
+        <li>minitest: 1132 LOC</li>
+        <li>test/unit: 235 LOC</li>
+      </ul>
+      <img src="images/rubyhipster.png" />
+    </div>
+    <div class="slide">
       <h1>Features RSpec has that I like</h1>
       <ul>
         <li>rspec-rails request specs: add :js => true to run with selenium</li>
         <li>RSpec documentation format</li>
+        <li>Nested contexts</li>
+        <img src="images/xbaz_bulleted_list.png">
         <li>Failure output</li>
       </ul>
-    </div>
-    <div class="slide">
-      <h1>RSpec Failure Output</h1>
-      <div>
-        <div>
-          Failures:<br />
-          <br />
-          1) PowerpointFixer#repair_text splits a wall of text into bullets
-        </div>
-        <div style="color: #c00;">
-          Failure/Error: @new_slide_content.should match(/^- We/)<br />
-          expected "We will create a versetile content-based conglomeration while persevering at exuding info-mediaries. Open-source local benchmarks will be networked via homogeneous info-mediaries. Optional zero administration arrays will avoid a polarised intangible system engine malfunction." to match /^- We/
-        </div>
-        <div>
-          # ./powerpoint_fixer_spec.rb:15:in `block (3 levels) in &lt;top (required)>'
-        </div>
-     </div>
     </div>
     <div class="slide">
       <h1>Other features</h1>  
       <table>
         <tr>
           <th>Feature</th>
-          <th>Test::Unit</th>
-          <th>Minitest</th>
+          <th>test/unit</th>
+          <th>minitest</th>
           <th>RSpec</th>
         </tr>
         <tr>
-          <th>Included in 1.9.x stdlib</th>
-          <th>yes</th>
-          <th>yes</th>
-          <th>no</th>
+          <td>Included in 1.9.x stdlib</td>
+          <td>yes</td>
+          <td>yes</td>
+          <td>no</td>
         </tr>
         <tr>
-          <th>Mocking</th>
-          <th>no</th>
-          <th>yes</th>
-          <th>yes</th>
+          <td>Mocking</td>
+          <td>no</td>
+          <td>yes</td>
+          <td>yes</td>
         </tr>
         <tr>
-          <th>Pending</th>
-          <th>no</th>
-          <th>yes ("skip")</th>
-          <th>yes ("pending")</th>
+          <td>Pending</td>
+          <td>no</td>
+          <td>yes ("skip")</td>
+          <td>yes ("pending")</td>
+        </tr>
+      </table>
+    </div>
+    <div class="slide">
+      <h1>Time of a trivial example</h1>
+      <table>
+        <tr>
+          <th>Framework</th>
+          <th>Time</th>
+        </tr>
+        <tr>
+          <td>test/unit</td>
+          <td>0.097s</td>
+        </tr>
+        <tr>
+          <td>RSpec</td>
+          <td>0.532s</td>
+        </tr>
+        <tr>
+          <td>minitest</td>
+          <td>0.075s</td>
+        </tr>
+        <tr>
+          <td>minispec</td>
+          <td>0.074s</td>
         </tr>
       </table>
     </div>
     <div class="slide">
       <h1>Conclusions</h1>
       <ul>
-        <li></li>
-        <li>... I might use MiniSpec on my next project.</li>
+        <li><img src="images/dhh_concession.png" /></li>
+        <li>... I might use minispec on my next project.</li>
       </ul>
     </div>
     <div class="slide">
@@ -154,10 +177,14 @@
 		    <li><a href="https://gist.github.com/893027">Gist of the code that started the whole thing</a></li>
 		    <li><a href="http://avdi.org/devblog/2011/04/07/rspec-is-for-the-literate/">Avdi: RSpec is for the Literate</a></li>
 		    <li><a href="http://www.ultrasaurus.com/sarahblog/2009/08/ruby-unit-test-frameworks/">Ultrasaurus: comparing test output</a></li>
-		    <li><a href="http://bfts.rubyforge.org/minitest/">Minitest RDoc</a></li>
-
+		    <li><a href="http://bfts.rubyforge.org/minitest/">minitest RDoc</a></li>
+		    <li><a href="http://ruby-doc.org/stdlib/libdoc/test/unit/rdoc/index.html">test/unit RDoc</a></li>
+	      <li><a href="https://github.com/rspec/rspec">RSpec on Github</a></li>
 	    </ul>
     </div>
+    <div class="slide">
+      Thanks! Talk is up on github.com/clnclarinet/rspec-vs-testunit
+      </div>
   </div>
 
 </body>

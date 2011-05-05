@@ -21,13 +21,31 @@ sup {font-size: smaller; line-height: 1px;}
 .slide code {padding: 2px 0.25em; font-weight: bold; color: #533;}
 .slide code.bad, code del {color: red;}
 .slide code.old {color: silver;}
-.slide pre {padding: 0; margin: 0.25em 0 0.5em 0.5em; color: #533; font-size: 90%;}
+.slide pre {padding: 0.5em; margin: 0.25em 0 0.25em 0.5em; color: #333; background: #fff; font-size: 90%;}
 .slide pre code {display: block;}
-.slide ul {margin-left: 5%; margin-right: 7%; list-style: disc;}
+.slide ul { margin-right: 7%; margin-bottom: 0.75em; list-style: disc;}
 .slide li {margin-top: 0.75em; margin-right: 0;}
 .slide ul ul {line-height: 1;}
 .slide ul ul li {margin: .2em; font-size: 85%; list-style: square;}
 .slide img.leader {display: block; margin: 0 auto;}
+
+.slide table {
+	border: 1px solid #555;
+	text-align: left;
+	border-collapse: collapse;
+}
+.slide table th {
+	font-weight: bold;
+	color: yellow;
+}
+.slide table th,
+.slide table td {
+	padding: 0.5em;
+	border: 1px solid #555;
+}
+.slide table td {
+	font-weight: normal;
+}
 
 div#header, div#footer {background: #000; color: #eee;
   font-family: Verdana, Helvetica, sans-serif;}
@@ -39,12 +57,27 @@ div#footer {font-size: 0.5em; font-weight: bold; padding: 1em 0; border-top: 1px
 #footer h2 {font-style: italic;}
 
 div.long {font-size: 0.75em;}
-.slide h1 {position: absolute; top: 0.7em; left: 87px; z-index: 1;
+.slide h1 {position: absolute; top: 0.7em; z-index: 1;
   margin: 0; padding: 0.3em 0 0 0; white-space: nowrap;
   font: bold 150%/1em Helvetica, sans-serif; text-transform: capitalize;
   /*color: #DDE; background: #005;*/}
 .slide h3 {font-size: 130%;}
 h1 abbr {font-variant: small-caps;}
+
+/* To keep the header on the whiteboard in the vivisimo training room on the MBA */
+div#header {
+	height: 6em !important;
+}
+.slide {
+	padding-top: 6.5em !important;
+}
+.slide h1 {
+	padding-top: 1.8em !important;
+}
+
+#currentSlide {
+	width: 15%;
+}
 
 div#controls {position: absolute; left: 50%; bottom: 0;
   width: 50%;
